@@ -5,10 +5,10 @@
 #                      (| -_- |)
 #                      0\  =  /0
 #                    ___/`---'\___
-#                  .' //|     |// '.
-#                 / //|||  :  |||// \
+#                  .' \\|     |// '.
+#                 / \\|||  :  |||// \
 #                / _||||| -:- |||||- \
-#               |   | //  -  /// |   |
+#               |   | \\\  -  /// |   |
 #               | \_|  ''\---/''  |_/ |
 #               \  .-\__  '-'  ___/-. /
 #             ___'. .'  /--.--\  `. .'___
@@ -73,7 +73,7 @@ st2 = []
 Color = ""
 
 ####存list違規路段
-ocrfilepath = 'path_OCR//path_ocr'
+ocrfilepath = os.getcwd().decode('big5')+'\\path_OCR\\path_ocr'
 file1 = file(ocrfilepath,'r')
 content1 = file1.read()
 file1.close()
@@ -81,7 +81,7 @@ content1=content1.replace(";"," ")
 piece1 = string.split(content1)
 y = len(piece1)
 ##########ico圖片路徑
-icopath = 'path_OCR//te4.ico'  
+icopath = os.getcwd()+'\\path_OCR\\te4.ico'  
 # -----------------------------------------------------------------------------------------------------------------
 class Example(wx.Frame): 
   def __init__(self, parent, id, title): 
@@ -99,23 +99,23 @@ class Example(wx.Frame):
     filemenu3 = wx.Menu()
 
     qmi2 = wx.MenuItem(filemenu, 1, u'檔案路徑修正!')   #   
-    qmi2.SetBitmap(wx.Bitmap('path_OCR//i2.ico' ))    
+    qmi2.SetBitmap(wx.Bitmap('path_OCR\\i2.ico' ))    
     qmi3 = wx.MenuItem(filemenu, 2, u'xlsx建檔!')   #   
-    qmi3.SetBitmap(wx.Bitmap('path_OCR//i3.ico' ))  
+    qmi3.SetBitmap(wx.Bitmap('path_OCR\\i3.ico' ))  
 
     qmi = wx.MenuItem(filemenu3, 4, "Quit")   #
-    qmi.SetBitmap(wx.Bitmap('path_OCR//i1.ico' ))  
+    qmi.SetBitmap(wx.Bitmap('path_OCR\\i1.ico' ))  
 
     q1 = wx.MenuItem(filemenu2, 5, u'跳過辨識過的!')   #   
-    q1.SetBitmap(wx.Bitmap('path_OCR//i4.ico' ))    
+    q1.SetBitmap(wx.Bitmap('path_OCR\\i4.ico' ))    
     q2 = wx.MenuItem(filemenu2, 6, u'全部重新辨識!')   #   
-    q2.SetBitmap(wx.Bitmap('path_OCR//i5.ico' ))    
+    q2.SetBitmap(wx.Bitmap('path_OCR\\i5.ico' ))    
 
     qq = wx.MenuItem(filemenu4, 10, u'啟動固定桿建檔!')   #   
-    qq.SetBitmap(wx.Bitmap('path_OCR//i7.jpg' ))
+    qq.SetBitmap(wx.Bitmap('path_OCR\\i7.jpg' ))
 
     qpd = wx.MenuItem(filemenu5, 11, 'DBF-->PDF!')   #   
-    qpd.SetBitmap(wx.Bitmap('path_OCR//i8.ico' )) 
+    qpd.SetBitmap(wx.Bitmap('path_OCR\\i8.ico' )) 
 
     filemenu.AppendItem(qmi2)       
     filemenu.AppendItem(qmi3)
@@ -435,8 +435,8 @@ class Example(wx.Frame):
     IDcount =0;
 
     #print dirpath
-    print dirpath[dirpath.rfind(u"//")+1:]+".xlsx"
-    workbook = xlsxwriter.Workbook(dirpath+u'//'+xlsxname)
+    print dirpath[dirpath.rfind(u"\\")+1:]+".xlsx"
+    workbook = xlsxwriter.Workbook(dirpath+u'\\'+xlsxname)
     bold = workbook.add_format({'bold': True})
     worksheet = workbook.add_worksheet()
     worksheet.write('A1',u'文件夾', bold)
@@ -452,24 +452,24 @@ class Example(wx.Frame):
         if root == dirpath:
             path = root.replace(dirpath,'')
         else:               
-            path = root.replace(dirpath+"//",'')               
-        if "//" in path:
+            path = root.replace(dirpath+"\\",'')               
+        if "\\" in path:
 
-            camID = path[path.find("//")+1:]               
+            camID = path[path.find("\\")+1:]               
             for f in files:
                     if ".jpg" in os.path.join(root, f):
                         count = count+1
             
             if count!=0:
-                if "//" in camID:                                                           
+                if "\\" in camID:                                                           
                     mutilphoto = True                        
-                    worksheet.write(row,3,camID[camID.find("//")+1:])
-                    camID = camID[:camID.rfind("//")]               
+                    worksheet.write(row,3,camID[camID.find("\\")+1:])
+                    camID = camID[:camID.rfind("\\")]               
                 
                 else :
                     mutilphoto = False
                     worksheet.write(row,3,u'超速')
-                addr = path[:path.find("//")]
+                addr = path[:path.find("\\")]
                 if nowpath!=addr:
                     worksheet.write(row,0,addr) 
                 addr2 = addr[:len(addr)-11]
@@ -492,7 +492,7 @@ class Example(wx.Frame):
                     who = u'4'                       
                 else:
                     who = u'6'
-                date = dirpath[dirpath.rfind("//")+3:dirpath.rfind("//")+8]                    
+                date = dirpath[dirpath.rfind("\\")+3:dirpath.rfind("\\")+8]                    
                 worksheet.write(row,6,"9P"+date+who+booknum[IDcount])                    
                 
                 if u'-C' in camID:
@@ -546,34 +546,34 @@ class Example(wx.Frame):
                 strsu =  os.path.join(f).replace('.jpg','')
                 strf =  os.path.join(root)
                 pathr = os.path.join(root , f).replace('.jpg','')
-                pathrtxt = os.path.join(root , f).replace('.jpg','')+u'//'+strsu+u".txt"
+                pathrtxt = os.path.join(root , f).replace('.jpg','')+u'\\'+strsu+u".txt"
                 isexists = os.path.exists(pathr)
                 isexiststxt = os.path.exists(pathrtxt)
                 if not isexiststxt :
                     if not isexists :
-                        if u'紅燈' in strf or u'不依標誌標線' in strf or u'未依標線之指示' in strf : 
+                        if u'5310001' in strf or u'6020302' in strf or u'4810201' in strf :
                            # if strsu[len(strsu)-2:len(strsu)] == "F1" :
                             os.mkdir(pathr)
                             count = count+1
                             mainomli(strsu,strf,count)
-                        if u'快速道路' in strf : 
+                        if u'331120' in strf : 
                            # if strsu[len(strsu)-2:len(strsu)] == "F1" :
                             os.mkdir(pathr)
                             count = count+1
                             mainomli2(strsu,strf,count)
-                        if  u'紅燈' not in strf and  u'標線' not in strf and u'號誌' not in strf : 
+                        if  u'331120' not in strf and  u'5310001' not in strf and u'6020302' not in strf and  u'4810201' not in strf and u'5320001' not in strf : 
                             count = count+1
                             os.mkdir(pathr)
                             mainom(strsu,strf,count) 
                     else:
                         count = count+1
-                        if u'紅燈' in strf or u'不依標誌標線' in strf or u'未依標線之指示' in strf : 
+                        if u'5310001' in strf or u'6020302' in strf or u'4810201' in strf :
                             #if strsu[len(strsu)-2:len(strsu)] == "F1" :
                             mainomli(strsu,strf,count)
-                        if u'快速道路' in strf : 
+                        if u'331120' in strf : 
                            # if  strsu[len(strsu)-2:len(strsu)] == "F1" :
                             mainomli2(strsu,strf,count)
-                        if  u'紅燈' not in strf and  u'標線' not in strf and u'號誌' not in strf : 
+                        if  u'331120' not in strf and  u'5310001' not in strf and u'6020302' not in strf and  u'4810201' not in strf and u'5320001' not in strf : 
                             mainom(strsu,strf,count)
 
     tEnd = time.time()
@@ -622,30 +622,30 @@ class Example(wx.Frame):
                 pathr = os.path.join(root , f).replace('.jpg','')
                 isexists = os.path.exists(pathr)
                 if not isexists :
-                    if u'紅燈' in strf or u'不依標誌標線' in strf or u'未依標線之指示' in strf :
+                    if u'5310001' in strf or u'6020302' in strf or u'4810201' in strf :
                         # if strsu[len(strsu)-2:len(strsu)] == "F1" :
                         os.mkdir(pathr)
                         count = count+1
                         mainomli(strsu,strf,count)
-                    if u'快速道路' in strf : 
+                    if u'331120' in strf : 
                         # if strsu[len(strsu)-2:len(strsu)] == "F1" :
                         os.mkdir(pathr)
                         count = count+1
                         mainomli2(strsu,strf,count)
-                    if  u'紅燈' not in strf and  u'標線' not in strf and u'號誌' not in strf : 
+                    if  u'331120' not in strf and  u'5310001' not in strf and u'6020302' not in strf and  u'4810201' not in strf and u'5320001' not in strf : 
                         count = count+1
                         os.mkdir(pathr)
                         mainom(strsu,strf,count) 
                 else:
-                    if u'紅燈' in strf or u'不依標誌標線' in strf or u'未依標線之指示' in strf : 
+                    if u'5310001' in strf or u'6020302' in strf or u'4810201' in strf :
                         # if strsu[len(strsu)-2:len(strsu)] == "F1" :
                         count = count+1
                         mainomli(strsu,strf,count)
-                    if u'快速道路' in strf : 
+                    if u'331120' in strf : 
                         # if  strsu[len(strsu)-2:len(strsu)] == "F1" :
                         count = count+1
                         mainomli2(strsu,strf,count)
-                    if  u'紅燈' not in strf and  u'標線' not in strf and u'號誌' not in strf : 
+                    if  u'331120' not in strf and  u'5310001' not in strf and u'6020302' not in strf and  u'4810201' not in strf and u'5320001' not in strf : 
                         count = count+1
                         mainom(strsu,strf,count)
     tEnd = time.time()
@@ -667,7 +667,7 @@ class Example(wx.Frame):
         for f in files:
             strf =  os.path.join(root)
             if ".jpg" in os.path.join(root , f):
-                if u'紅燈' in strf or u'標線' in strf or u'標誌' in strf or u'快速道路' in strf : 
+                if u'331120' in strf or u'5310001' in strf or u'6020302' in strf or u'4810201' in strf or u'5320001' in strf : 
                     if os.path.join(f).find("F1")<0 and os.path.join(f).find("F2")<0:
                         if c%2==0 : 
                             r1 = os.path.join(root , f)
@@ -686,16 +686,16 @@ class Example(wx.Frame):
     for root, dirs, files in os.walk(dirpath):               
         for f1 in files:
             strph =  os.path.join(root , f1)
-            finame = strph[strph.rfind('//'):len(strph)].replace('.jpg','')
+            finame = strph[strph.rfind('\\'):len(strph)].replace('.jpg','')
             if ".jpg" in strph :
                 if len(finame) < 12 :
                     wx.MessageBox(u"發現異常 請更正 "+strph)
                     sys.exit(0)
-                if  u'紅燈' not in strph and u'標線' not in strph and u'標誌' not in strph and u'快速道路' not in strph :
-                    strph1 = strph[0:strph.rfind('//')]
-                    patnum = strph1[strph1.rfind(u'//'):len(strph1)]
+                if  u'331120' not in strph and u'5310001' not in strph and u'6020302' not in strph and u'4810201' not in strph and u'5320001' not in strph :
+                    strph1 = strph[0:strph.rfind('\\')]
+                    patnum = strph1[strph1.rfind(u'\\'):len(strph1)]
                     patnum1 = strph1.replace(patnum, u'&')
-                    patnum2 = patnum1[patnum1.rfind(u'//')+1:patnum1.rfind(u'&')-11]
+                    patnum2 = patnum1[patnum1.rfind(u'\\')+1:patnum1.rfind(u'&')-11]
                     if pa != patnum2:
                         if patnum2.encode('utf-8') not in piece1 :
                             pa = patnum2 
@@ -703,12 +703,12 @@ class Example(wx.Frame):
                             PATH1.append(strph)
                             print patnum2
                             print strph   
-                if  u'紅燈' in strph or u'標線' in strph or u'標誌' in strph or u'快速道路' in strph : 
-                    strph2 = strph[0:strph.rfind('//')]
-                    strph2 = strph2[0:strph2.rfind('//')]
-                    patnum = strph2[strph2.rfind(u'//'):len(strph2)]
+                if  u'331120' in strph or u'5310001' in strph or u'6020302' in strph or u'4810201' in strph or u'5320001' in strph : 
+                    strph2 = strph[0:strph.rfind('\\')]
+                    strph2 = strph2[0:strph2.rfind('\\')]
+                    patnum = strph2[strph2.rfind(u'\\'):len(strph2)]
                     patnum1 = strph2.replace(patnum, u'&')
-                    patnum2 = patnum1[patnum1.rfind(u'//')+1:patnum1.rfind(u'&')-11]
+                    patnum2 = patnum1[patnum1.rfind(u'\\')+1:patnum1.rfind(u'&')-11]
                     if pa != patnum2:
                         if patnum2.encode('utf-8') not in piece1 :
                             pa = patnum2 
@@ -744,7 +744,7 @@ class Example(wx.Frame):
     fig = False
     ost = ""
     pdfpath1 = ""
-    ddrddd = dirpath1[0:dirpath1.rfind('//')+1]
+    ddrddd = dirpath1[0:dirpath1.rfind('\\')+1]
     if ".dbf" not in dirpath1 and ".DBF" not in dirpath1:
         wx.MessageBox(u"不存在DBF檔 請重新選取",u"提示訊息")
     else :
@@ -813,7 +813,7 @@ class Example(wx.Frame):
         for x in range(wxwx):
             for t in range(e):
                 phtotpath = photo_path[t]
-                phtotpath = phtotpath[phtotpath.rfind(u'//')+1:len(phtotpath)].replace('.jpg','')
+                phtotpath = phtotpath[phtotpath.rfind(u'\\')+1:len(phtotpath)].replace('.jpg','')
                 e1 = piece11[x*12+1]       
                 if e1[0:len(e1)-5] == phtotpath[0:len(e1)-5] and piece11[x*12+11] != '' and piece11[x*12+12] != '':
                     fig = True
@@ -870,18 +870,18 @@ class Example(wx.Frame):
                     # print piece11[x*12+1]
                     # print photo_path[t].encode('utf-8')
                     phtotpath = photo_path[t]
-                    phtotpath = phtotpath[phtotpath.rfind(u'//')+1:len(phtotpath)].replace('.jpg','')
+                    phtotpath = phtotpath[phtotpath.rfind(u'\\')+1:len(phtotpath)].replace('.jpg','')
                     
                     e1 = piece11[x*12+1]
-                    if e1[0:len(e1)-5] == phtotpath[0:len(e1)-5] and piece11[x*12+11] != '' and piece11[x*12+12] != '':
+                    if e1 == phtotpath and piece11[x*12+11] != '' and piece11[x*12+12] != '':
                         fig = True
                         cont1 = cont1+1
                         pathr = photo_path[t]
                         pathrr = photo_path[t].replace('1.jpg','2.jpg')
                         isexists = os.path.exists(pathr)
                         isexistss2 = os.path.exists(pathrr)
-                        pdfpath1 = pathr[0:pathr.rfind(u'//')]
-                        pdfpath1 = pdfpath1[0:pdfpath1.rfind(u'//')+1]
+                        pdfpath1 = pathr[0:pathr.rfind(u'\\')]
+                        pdfpath1 = pdfpath1[0:pdfpath1.rfind(u'\\')+1]
                         if  not isexists:
                             print pathr
                         if  isexists:
@@ -893,7 +893,7 @@ class Example(wx.Frame):
                             fonts.addMapping('song', 0, 0, 'song')
                             fonts.addMapping('song', 0, 1, 'song')
                             #-----------------------------------------------------
-                            db1 = dbf.Dbf('DBF//COLOR_CODE.DBF') 
+                            db1 = dbf.Dbf('DBF\\COLOR_CODE.DBF') 
 
                             for record in db1:
                                 co = piece22[x*12+1+10]
@@ -962,7 +962,7 @@ class TestPanelpath(wx.Panel):
   def __init__(self, parent, path):
     super(TestPanelpath, self).__init__(parent, -1)
     bitmap = wx.Bitmap(path)
-    bitmap = scale_bitmap(bitmap, 1024, 800)
+    bitmap = scale_bitmap(bitmap, 800, 600)
     control = wx.StaticBitmap(self, -1, bitmap)
     control.SetPosition((10, 60))
 
@@ -989,7 +989,7 @@ class TestPanelpath(wx.Panel):
 
 class Framepath( wx.Frame ):
   def __init__( self, parent ):
-    wx.Frame.__init__(self, parent, id = wx.ID_ANY, title = u"寫入新資料", pos = wx.DefaultPosition, size = wx.Size(1100,1100))
+    wx.Frame.__init__(self, parent, id = wx.ID_ANY, title = u"寫入新資料", pos = wx.DefaultPosition, size = wx.Size(1000,1000))
     panel = TestPanelpath(self, PATH1[0])
 
 class Apppath(wx.App):
@@ -1005,10 +1005,10 @@ class Apppath(wx.App):
 # -------------------------------------------------OCR image-------------------------------------------------------
 def omocr(img_name,path1,co):#ex:20150512_124104_906_1794_
   content = ""
-  patnum = path1[path1.rfind(u'//'):len(path1)] #rfind find from right
+  patnum = path1[path1.rfind(u'\\'):len(path1)] #rfind find from right
   patnum1 = path1.replace(patnum, u'&')
-  patnum2 = patnum1[patnum1.rfind(u'//')+1:patnum1.rfind(u'&')-11]
-  ispath = os.path.exists(u'path_OCR//path_ocr')
+  patnum2 = patnum1[patnum1.rfind(u'\\')+1:patnum1.rfind(u'&')-11]
+  ispath = os.path.exists(u'path_OCR\\path_ocr')
  # print ispath
   print u"第"+str(co)+u"筆 "
 
@@ -1019,7 +1019,7 @@ def omocr(img_name,path1,co):#ex:20150512_124104_906_1794_
       content = piece1[x+1]
       print content.decode('UTF-8')  
 
-  strsp = path1+"//"+img_name
+  strsp = path1+"\\"+img_name
   im = PIL.Image.open(strsp+u'.jpg').convert('L')
   isExists = os.path.exists(strsp)
   if isExists :
@@ -1028,31 +1028,31 @@ def omocr(img_name,path1,co):#ex:20150512_124104_906_1794_
     spdown2 = u' '
     spup2 = u' '
     if da_v == False:
-      im.crop((185, 30, 480, 85)).save(strsp+u'//day.png')
-      day = pytesseract.image_to_string(PIL.Image.open(strsp+u'//day.png')).replace('/','').replace(" ", "").replace("O", "0")
+      im.crop((185, 30, 480, 85)).save(strsp+u'\\day.png')
+      day = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\day.png')).replace('/','').replace(" ", "").replace("O", "0")
       day=filter(str.isdigit, day)
       day2 = day[0:8]
       if day[0] == "2":
         day2 = int(day2)-19110000
     if ti_v == False:
-      im.crop((185, 90, 330, 150)).save(strsp+u'//time.png')
-      time = pytesseract.image_to_string(PIL.Image.open(strsp+u'//time.png')).replace(':','').replace(" ", "").replace("O", "0")
+      im.crop((185, 90, 330, 150)).save(strsp+u'\\time.png')
+      time = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\time.png')).replace(':','').replace(" ", "").replace("O", "0")
       time=filter(str.isdigit, time)
       time2 = time[0:4]
     if do_v == False:
-      im.crop((959, 90, 1180, 150)).save(strsp+u'//spdown.png')
-      spdown = pytesseract.image_to_string(PIL.Image.open(strsp+u'//spdown.png')).replace(" ", "").replace("O", "0")
+      im.crop((959, 90, 1180, 150)).save(strsp+u'\\spdown.png')
+      spdown = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\spdown.png')).replace(" ", "").replace("O", "0")
       spdown=filter(str.isdigit, spdown)
       spdown2 = spdown[0:3]
     if up_v == False:
-      im.crop((959, 25, 1180, 85)).save(strsp+u'//spup.png')
-      spup = pytesseract.image_to_string(PIL.Image.open(strsp+u'//spup.png')).replace(" ", "").replace("O", "0")
+      im.crop((959, 25, 1180, 85)).save(strsp+u'\\spup.png')
+      spup = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\spup.png')).replace(" ", "").replace("O", "0")
       spup=filter(str.isdigit, spup)
       spup2 = spup[0:3]
     if li_v == False:
-      im.crop((1, 1400, 610, 1710)).save(strsp+u'//li.png')
+      im.crop((1, 1400, 610, 1710)).save(strsp+u'\\li.png')
 
-    f = file(strsp+'//'+img_name+'.txt', 'w+')
+    f = file(strsp+'\\'+img_name+'.txt', 'w+')
     f.write(img_name+u';'+str(day2)+u';'+str(time2)+u';'+str(spup2)+u';'+str(spdown2)+u';') # write text to file
     if ispath :
       f.write(content)#寫入抓到的照相地點
@@ -1070,10 +1070,10 @@ def omocr(img_name,path1,co):#ex:20150512_124104_906_1794_
 def omocr2(img_name,path1,co):#ex:20150508104553-1
   timefin = ''
   content = ""
-  patnum = path1[path1.rfind(u'//'):len(path1)] #rfind find from right
+  patnum = path1[path1.rfind(u'\\'):len(path1)] #rfind find from right
   patnum1 = path1.replace(patnum, u'&')
-  patnum2 = patnum1[patnum1.rfind(u'//')+1:patnum1.rfind(u'&')-11]
-  ispath = os.path.exists(u'path_OCR//path_ocr')
+  patnum2 = patnum1[patnum1.rfind(u'\\')+1:patnum1.rfind(u'&')-11]
+  ispath = os.path.exists(u'path_OCR\\path_ocr')
   #print ispath
   print u"第"+str(co)+u"筆 "
   
@@ -1083,7 +1083,7 @@ def omocr2(img_name,path1,co):#ex:20150508104553-1
     if str1 == str2 :
       content = piece1[x+1]
       print content.decode('UTF-8')
-  strsp = path1+"//"+img_name
+  strsp = path1+"\\"+img_name
   im = PIL.Image.open(strsp+u'.jpg').convert('L')
   isExists = os.path.exists(strsp)
   if isExists :
@@ -1092,31 +1092,31 @@ def omocr2(img_name,path1,co):#ex:20150508104553-1
     spdown2 = u' '
     spup2 = u' '
     if da_v == False:
-      im.crop((212, 2688, 637, 2768)).save(strsp+u'//day.png')
-      day = pytesseract.image_to_string(PIL.Image.open(strsp+u'//day.png')).replace('/','').replace(" ", "").replace("O", "0")
+      im.crop((212, 2688, 637, 2768)).save(strsp+u'\\day.png')
+      day = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\day.png')).replace('/','').replace(" ", "").replace("O", "0")
       day=filter(str.isdigit, day)
       day2 = day[0:8]
       if day[0] == "2":
         day2 = int(day2)-19110000
     if ti_v == False:
-      im.crop((200, 2770, 550, 2860)).save(strsp+u'//time.png')
-      time = pytesseract.image_to_string(PIL.Image.open(strsp+u'//time.png')).replace(':','').replace(" ", "").replace("O", "0")
+      im.crop((200, 2770, 550, 2860)).save(strsp+u'\\time.png')
+      time = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\time.png')).replace(':','').replace(" ", "").replace("O", "0")
       time=filter(str.isdigit, time)
       time2 = time[0:4]
     if do_v == False:
-      im.crop((3240, 2770, 3560, 2850)).save(strsp+u'//spdown.png')
-      spdown =pytesseract.image_to_string(PIL.Image.open(strsp+u'//spdown.png')).replace(" ", "").replace("O", "0")
+      im.crop((3240, 2770, 3560, 2850)).save(strsp+u'\\spdown.png')
+      spdown =pytesseract.image_to_string(PIL.Image.open(strsp+u'\\spdown.png')).replace(" ", "").replace("O", "0")
       spdown=filter(str.isdigit, spdown)
       spdown2 = spdown[0:3]
     if up_v == False:
-      im.crop((3080, 2680, 3400, 2770)).save(strsp+u'//spup.png')
-      spup = pytesseract.image_to_string(PIL.Image.open(strsp+u'//spup.png')).replace(" ", "").replace("O", "0")
+      im.crop((3080, 2680, 3400, 2770)).save(strsp+u'\\spup.png')
+      spup = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\spup.png')).replace(" ", "").replace("O", "0")
       spup=filter(str.isdigit, spup)
       spup2 = spup[0:3]
     if li_v == False:
-      im.crop((15, 2130, 900, 2680)).save(strsp+u'//li.png')
+      im.crop((15, 2130, 900, 2680)).save(strsp+u'\\li.png')
 
-    f = file(strsp+'//'+img_name+'.txt', 'w+')
+    f = file(strsp+'\\'+img_name+'.txt', 'w+')
     f.write(img_name+u';'+str(day2)+u';'+str(time2)+u';'+str(spup2)+u';'+str(spdown2)+u';') # write text to file
     if ispath :
       f.write(content)#寫入抓到的照相地點
@@ -1132,10 +1132,10 @@ def omocr2(img_name,path1,co):#ex:20150508104553-1
 
 def omocr3(img_name,path1,co):#ex:593-072_*****_20150508124944_199_TYC008
   content = ""
-  patnum = path1[path1.rfind(u'//'):len(path1)] #rfind find from right
+  patnum = path1[path1.rfind(u'\\'):len(path1)] #rfind find from right
   patnum1 = path1.replace(patnum, u'&')
-  patnum2 = patnum1[patnum1.rfind(u'//')+1:patnum1.rfind(u'&')-11]
-  ispath = os.path.exists(u'path_OCR//path_ocr')
+  patnum2 = patnum1[patnum1.rfind(u'\\')+1:patnum1.rfind(u'&')-11]
+  ispath = os.path.exists(u'path_OCR\\path_ocr')
   #print ispath
   print u"第"+str(co)+u"筆 "
   
@@ -1145,7 +1145,7 @@ def omocr3(img_name,path1,co):#ex:593-072_*****_20150508124944_199_TYC008
     if str1 == str2 :
       content = piece1[x+1]
       print content.decode('UTF-8')
-  strsp = path1+"//"+img_name
+  strsp = path1+"\\"+img_name
   im = PIL.Image.open(strsp+u'.jpg').convert('L')
   isExists = os.path.exists(strsp)
   if isExists :
@@ -1154,31 +1154,31 @@ def omocr3(img_name,path1,co):#ex:593-072_*****_20150508124944_199_TYC008
     spdown2 = u' '
     spup2 = u' '
     if da_v == False:
-      im.crop((200, 8, 550, 85)).save(strsp+u'//day.png') 
-      day = pytesseract.image_to_string(PIL.Image.open(strsp+u'//day.png')).replace('/','').replace(" ", "").replace("O", "0")
+      im.crop((200, 8, 550, 85)).save(strsp+u'\\day.png') 
+      day = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\day.png')).replace('/','').replace(" ", "").replace("O", "0")
       day=filter(str.isdigit, day)
       day2 = day[0:8]
       if day[0] == "2":
         day2 = int(day2)-19110000
     if ti_v == False:
-      im.crop((200, 100, 410, 190)).save(strsp+u'//time.png')
-      time = pytesseract.image_to_string(PIL.Image.open(strsp+u'//time.png')).replace(':','').replace(" ", "").replace("O", "0")
+      im.crop((200, 100, 410, 190)).save(strsp+u'\\time.png')
+      time = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\time.png')).replace(':','').replace(" ", "").replace("O", "0")
       time=filter(str.isdigit, time)
       time2 = time[0:4]
     if do_v == False:
-      im.crop((2500, 90, 2630,200)).save(strsp+u'//spdown.png')
-      spdown = pytesseract.image_to_string(PIL.Image.open(strsp+u'//spdown.png')).replace(" ", "").replace("O", "0")
+      im.crop((2500, 90, 2630,200)).save(strsp+u'\\spdown.png')
+      spdown = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\spdown.png')).replace(" ", "").replace("O", "0")
       spdown=filter(str.isdigit, spdown)
       spdown2 = spdown[0:3]
     if up_v == False:
-      im.crop((2500, 8, 2630, 85)).save(strsp+u'//spup.png')
-      spup = pytesseract.image_to_string(PIL.Image.open(strsp+u'//spup.png')).replace(" ", "").replace("O", "0")
+      im.crop((2500, 8, 2630, 85)).save(strsp+u'\\spup.png')
+      spup = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\spup.png')).replace(" ", "").replace("O", "0")
       spup=filter(str.isdigit, spup)
       spup2 = spup[0:3]
     if li_v == False:
-      im.crop((15, 2490, 950, 3050)).save(strsp+u'//li.png')    
+      im.crop((15, 2490, 950, 3050)).save(strsp+u'\\li.png')    
 
-    f = file(strsp+'//'+img_name+'.txt', 'w+')
+    f = file(strsp+'\\'+img_name+'.txt', 'w+')
     f.write(img_name+u';'+str(day2)+u';'+str(time2)+u';'+str(spup2)+u';'+str(spdown2)+u';') # write text to file
     if ispath :
       f.write(content)#寫入抓到的照相地點
@@ -1194,10 +1194,10 @@ def omocr3(img_name,path1,co):#ex:593-072_*****_20150508124944_199_TYC008
         
 def omocr4(img_name,path1,co):#ex:593-072_71268_20150508085056_252_TYC013
   content = ""
-  patnum = path1[path1.rfind(u'//'):len(path1)] #rfind find from right
+  patnum = path1[path1.rfind(u'\\'):len(path1)] #rfind find from right
   patnum1 = path1.replace(patnum, u'&')
-  patnum2 = patnum1[patnum1.rfind(u'//')+1:patnum1.rfind(u'&')-11]
-  ispath = os.path.exists(u'path_OCR//path_ocr')
+  patnum2 = patnum1[patnum1.rfind(u'\\')+1:patnum1.rfind(u'&')-11]
+  ispath = os.path.exists(u'path_OCR\\path_ocr')
   #print ispath
   print u"第"+str(co)+u"筆 "
   
@@ -1207,7 +1207,7 @@ def omocr4(img_name,path1,co):#ex:593-072_71268_20150508085056_252_TYC013
     if str1 == str2 :
       content = piece1[x+1]
       print content.decode('UTF-8')
-  strsp = path1+"//"+img_name
+  strsp = path1+"\\"+img_name
   im = PIL.Image.open(strsp+u'.jpg').convert('L')
   isExists = os.path.exists(strsp)
   if isExists :
@@ -1216,31 +1216,31 @@ def omocr4(img_name,path1,co):#ex:593-072_71268_20150508085056_252_TYC013
     spdown2 = u' '
     spup2 = u' '
     if da_v == False:
-      im.crop((200, 8, 550, 85)).save(strsp+u'//day.png')
-      day = pytesseract.image_to_string(PIL.Image.open(strsp+u'//day.png')).replace('/','').replace(" ", "").replace("O", "0")
+      im.crop((200, 8, 550, 85)).save(strsp+u'\\day.png')
+      day = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\day.png')).replace('/','').replace(" ", "").replace("O", "0")
       day=filter(str.isdigit, day)
       day2 = day[0:8]
       if day[0] == "2":
         day2 = int(day2)-19110000
     if ti_v == False:
-      im.crop((200, 100, 410, 190)).save(strsp+u'//time.png')
-      time = pytesseract.image_to_string(PIL.Image.open(strsp+u'//time.png')).replace(':','').replace(" ", "").replace("O", "0")    
+      im.crop((200, 100, 410, 190)).save(strsp+u'\\time.png')
+      time = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\time.png')).replace(':','').replace(" ", "").replace("O", "0")    
       time=filter(str.isdigit, time)
       time2 = time[0:4]
     if do_v == False:
-      im.crop((2500, 90, 2630,200)).save(strsp+u'//spdown.png')
-      spdown = pytesseract.image_to_string(PIL.Image.open(strsp+u'//spdown.png')).replace(" ", "").replace("O", "0")
+      im.crop((2500, 90, 2630,200)).save(strsp+u'\\spdown.png')
+      spdown = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\spdown.png')).replace(" ", "").replace("O", "0")
       spdown=filter(str.isdigit, spdown)
       spdown2 = spdown[0:3]
     if up_v == False:
-      im.crop((2500, 8, 2630, 85)).save(strsp+u'//spup.png')
-      spup = pytesseract.image_to_string(PIL.Image.open(strsp+u'//spup.png')).replace(" ", "").replace("O", "0")
+      im.crop((2500, 8, 2630, 85)).save(strsp+u'\\spup.png')
+      spup = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\spup.png')).replace(" ", "").replace("O", "0")
       spup=filter(str.isdigit, spup)
       spup2 = spup[0:3]
     if li_v == False:
-      im.crop((1385, 2490, 2320, 3050)).save(strsp+u'//li.png')
+      im.crop((1385, 2490, 2320, 3050)).save(strsp+u'\\li.png')
 
-    f = file(strsp+'//'+img_name+'.txt', 'w+')
+    f = file(strsp+'\\'+img_name+'.txt', 'w+')
     f.write(img_name+u';'+str(day2)+u';'+str(time2)+u';'+str(spup2)+u';'+str(spdown2)+u';') # write text to file
     if ispath :
       f.write(content)#寫入抓到的照相地點
@@ -1256,10 +1256,10 @@ def omocr4(img_name,path1,co):#ex:593-072_71268_20150508085056_252_TYC013
         
 def omocr5(img_name,path1,co):#ex:593-072_71429_20150508085056_252_TYC013
   content = ""
-  patnum = path1[path1.rfind(u'//'):len(path1)] #rfind find from right
+  patnum = path1[path1.rfind(u'\\'):len(path1)] #rfind find from right
   patnum1 = path1.replace(patnum, u'&')
-  patnum2 = patnum1[patnum1.rfind(u'//')+1:patnum1.rfind(u'&')-11]
-  ispath = os.path.exists(u'path_OCR//path_ocr')
+  patnum2 = patnum1[patnum1.rfind(u'\\')+1:patnum1.rfind(u'&')-11]
+  ispath = os.path.exists(u'path_OCR\\path_ocr')
   #print ispath
   print u"第"+str(co)+u"筆 "
   
@@ -1269,7 +1269,7 @@ def omocr5(img_name,path1,co):#ex:593-072_71429_20150508085056_252_TYC013
     if str1 == str2 :
       content = piece1[x+1]
       print content.decode('UTF-8')
-  strsp = path1+"//"+img_name
+  strsp = path1+"\\"+img_name
   im = PIL.Image.open(strsp+u'.jpg').convert('L')
   isExists = os.path.exists(strsp)
   if isExists :
@@ -1278,32 +1278,32 @@ def omocr5(img_name,path1,co):#ex:593-072_71429_20150508085056_252_TYC013
     spdown2 = u' '
     spup2 = u' '
     if da_v == False:
-      im.crop((200, 8, 550, 85)).save(strsp+u'//day.png')
-      day = pytesseract.image_to_string(PIL.Image.open(strsp+u'//day.png')).replace('/','').replace(" ", "").replace("O", "0")
+      im.crop((200, 8, 550, 85)).save(strsp+u'\\day.png')
+      day = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\day.png')).replace('/','').replace(" ", "").replace("O", "0")
       day=filter(str.isdigit, day)
       day2 = day[0:8]
       if day[0] == "2":
         day2 = int(day2)-19110000
     if ti_v == False:
-      im.crop((200, 100, 410, 190)).save(strsp+u'//time.png')
-      time = pytesseract.image_to_string(PIL.Image.open(strsp+u'//time.png')).replace(':','').replace(" ", "").replace("O", "0")
+      im.crop((200, 100, 410, 190)).save(strsp+u'\\time.png')
+      time = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\time.png')).replace(':','').replace(" ", "").replace("O", "0")
       time=filter(str.isdigit, time)
       time2 = time[0:4]
     if do_v == False:
-      im.crop((2500, 90, 2630,200)).save(strsp+u'//spdown.png')
-      spdown = pytesseract.image_to_string(PIL.Image.open(strsp+u'//spdown.png')).replace(" ", "").replace("O", "0")
+      im.crop((2500, 90, 2630,200)).save(strsp+u'\\spdown.png')
+      spdown = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\spdown.png')).replace(" ", "").replace("O", "0")
       spdown=filter(str.isdigit, spdown)
       spdown2 = spdown[0:3]
     if up_v == False:
-      im.crop((2500, 8, 2630, 85)).save(strsp+u'//spup.png')
-      spup = pytesseract.image_to_string(PIL.Image.open(strsp+u'//spup.png')).replace(" ", "").replace("O", "0")
+      im.crop((2500, 8, 2630, 85)).save(strsp+u'\\spup.png')
+      spup = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\spup.png')).replace(" ", "").replace("O", "0")
       spup=filter(str.isdigit, spup)
       spup2 = spup[0:3]
     if li_v == False:
-      im.crop((1550, 2490, 2495, 3050)).save(strsp+u'//li.png')
+      im.crop((1550, 2490, 2495, 3050)).save(strsp+u'\\li.png')
     
     
-    f = file(strsp+'//'+img_name+'.txt', 'w+')
+    f = file(strsp+'\\'+img_name+'.txt', 'w+')
     f.write(img_name+u';'+str(day2)+u';'+str(time2)+u';'+str(spup2)+u';'+str(spdown2)+u';') # write text to file
     if ispath :
       f.write(content)#寫入抓到的照相地點
@@ -1319,10 +1319,10 @@ def omocr5(img_name,path1,co):#ex:593-072_71429_20150508085056_252_TYC013
       
 def omocr6(img_name,path1,co):#ex:20150508_114655_140_2508_ AND 20150601_160720_953_2780_
   content = ""
-  patnum = path1[path1.rfind(u'//'):len(path1)] #rfind find from right
+  patnum = path1[path1.rfind(u'\\'):len(path1)] #rfind find from right
   patnum1 = path1.replace(patnum, u'&')
-  patnum2 = patnum1[patnum1.rfind(u'//')+1:patnum1.rfind(u'&')-11]
-  ispath = os.path.exists(u'path_OCR//path_ocr')
+  patnum2 = patnum1[patnum1.rfind(u'\\')+1:patnum1.rfind(u'&')-11]
+  ispath = os.path.exists(u'path_OCR\\path_ocr')
   #print ispath
   print u"第"+str(co)+u"筆 "
   
@@ -1332,7 +1332,7 @@ def omocr6(img_name,path1,co):#ex:20150508_114655_140_2508_ AND 20150601_160720_
     if str1 == str2 :
       content = piece1[x+1]
       print content.decode('UTF-8')
-  strsp = path1+"//"+img_name
+  strsp = path1+"\\"+img_name
   im = PIL.Image.open(strsp+u'.jpg').convert('L')
   isExists = os.path.exists(strsp)
   if isExists :
@@ -1341,32 +1341,32 @@ def omocr6(img_name,path1,co):#ex:20150508_114655_140_2508_ AND 20150601_160720_
     spdown2 = u' '
     spup2 = u' '
     if da_v == False:
-      im.crop((240, 30, 650, 110)).save(strsp+u'//day.png')
-      day = pytesseract.image_to_string(PIL.Image.open(strsp+u'//day.png')).replace('/','').replace(" ", "").replace("O", "0")
+      im.crop((240, 30, 650, 110)).save(strsp+u'\\day.png')
+      day = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\day.png')).replace('/','').replace(" ", "").replace("O", "0")
       day=filter(str.isdigit, day)
       day2 = day[0:8]
       if day[0] == "2":
         day2 = int(day2)-19110000
     if ti_v == False:
-      im.crop((240, 110, 450, 190)).save(strsp+u'//time.png')
-      time = pytesseract.image_to_string(PIL.Image.open(strsp+u'//time.png')).replace(':','').replace(" ", "").replace("O", "0")
+      im.crop((240, 110, 450, 190)).save(strsp+u'\\time.png')
+      time = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\time.png')).replace(':','').replace(" ", "").replace("O", "0")
       time=filter(str.isdigit, time)
       time2 = time[0:4]
     if do_v == False:
-      im.crop((1330, 110, 1620, 190)).save(strsp+u'//spdown.png')
-      spdown = pytesseract.image_to_string(PIL.Image.open(strsp+u'//spdown.png')).replace(" ", "").replace("O", "0")
+      im.crop((1330, 110, 1620, 190)).save(strsp+u'\\spdown.png')
+      spdown = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\spdown.png')).replace(" ", "").replace("O", "0")
       spdown=filter(str.isdigit, spdown)
       spdown2 = spdown[0:3]
     if up_v == False:
-      im.crop((1330, 30, 1620, 110)).save(strsp+u'//spup.png')
-      spup = pytesseract.image_to_string(PIL.Image.open(strsp+u'//spup.png')).replace(" ", "").replace("O", "0")
+      im.crop((1330, 30, 1620, 110)).save(strsp+u'\\spup.png')
+      spup = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\spup.png')).replace(" ", "").replace("O", "0")
       spup=filter(str.isdigit, spup)
       spup2 = spup[0:3]
     if li_v == False:
-      im.crop((10, 1870, 820, 2300)).save(strsp+u'//li.png')
+      im.crop((10, 1870, 820, 2300)).save(strsp+u'\\li.png')
     
     
-    f = file(strsp+'//'+img_name+'.txt', 'w+')
+    f = file(strsp+'\\'+img_name+'.txt', 'w+')
     f.write(img_name+u';'+str(day2)+u';'+str(time2)+u';'+str(spup2)+u';'+str(spdown2)+u';') # write text to file
     if ispath :
       f.write(content)#寫入抓到的照相地點
@@ -1382,12 +1382,12 @@ def omocr6(img_name,path1,co):#ex:20150508_114655_140_2508_ AND 20150601_160720_
         
 def omred(img_name,path1,co):
   content = ""
-  patnum = path1[path1.rfind(u'//'):len(path1)] #號誌+法條
+  patnum = path1[path1.rfind(u'\\'):len(path1)] #號誌+法條
   patnum2 = path1.replace(patnum, u'') #去掉法條的路徑
-  patnum3 = patnum2[patnum2.rfind(u'//'):len(patnum2)]
+  patnum3 = patnum2[patnum2.rfind(u'\\'):len(patnum2)]
   patnum4 = patnum2.replace(patnum3, u'&')
-  patnum5 = patnum4[patnum4.rfind(u'//')+1:patnum4.rfind(u'&')-11]
-  ispath = os.path.exists(u'path_OCR//path_ocr')
+  patnum5 = patnum4[patnum4.rfind(u'\\')+1:patnum4.rfind(u'&')-11]
+  ispath = os.path.exists(u'path_OCR\\path_ocr')
   #print ispath
   print u"第"+str(co)+u"筆 "
   
@@ -1397,28 +1397,28 @@ def omred(img_name,path1,co):
     if str1 == str2 :
       content = piece1[x+1]
       print content.decode('UTF-8')
-  strsp = path1+"//"+img_name
+  strsp = path1+"\\"+img_name
   im = PIL.Image.open(strsp+u'.jpg').convert('L')
   isExists = os.path.exists(strsp)
   if isExists :
     day2 = u''
     time2 = u''
     if da_v == False:
-      im.crop((200, 30, 520, 90)).save(strsp+u'//day.png')
-      day = pytesseract.image_to_string(PIL.Image.open(strsp+u'//day.png')).replace('/','').replace(" ", "").replace("O", "0")
+      im.crop((200, 30, 520, 90)).save(strsp+u'\\day.png')
+      day = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\day.png')).replace('/','').replace(" ", "").replace("O", "0")
       day=filter(str.isdigit, day)
       day2 = day[0:8]
       if day[0] == "2":
         day2 = int(day2)-19110000
     if ti_v == False:
-      im.crop((200, 90, 360, 153)).save(strsp+u'//time.png')
-      time = pytesseract.image_to_string(PIL.Image.open(strsp+u'//time.png')).replace(':','').replace(" ", "").replace("O", "0")
+      im.crop((200, 90, 360, 153)).save(strsp+u'\\time.png')
+      time = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\time.png')).replace(':','').replace(" ", "").replace("O", "0")
       time=filter(str.isdigit, time)
       time2 = time[0:4]
     if li_v == False:
-      im.crop((1895, 274, 2500, 595)).save(strsp+u'//li.png')
+      im.crop((1895, 274, 2500, 595)).save(strsp+u'\\li.png')
 
-    f = file(strsp+'//'+img_name+'.txt', 'w+')
+    f = file(strsp+'\\'+img_name+'.txt', 'w+')
     f.write(img_name+u';'+str(day2)+u';'+str(time2)+u'; '+u'; '+u';') # write text to file
     if ispath :
       f.write(content)#寫入抓到的照相地點
@@ -1434,14 +1434,14 @@ def omred(img_name,path1,co):
 
 def omred2(img_name,path1,co):
   content = ""
-  patnum = path1[path1.rfind(u'//'):len(path1)] #號誌+法條
+  patnum = path1[path1.rfind(u'\\'):len(path1)] #號誌+法條
   patnum2 = path1.replace(patnum, u'') #去掉法條的路徑
-  patnum3 = patnum2[patnum2.rfind(u'//'):len(patnum2)]
+  patnum3 = patnum2[patnum2.rfind(u'\\'):len(patnum2)]
   patnum4 = patnum2.replace(patnum3, u'&')
-  patnum5 = patnum4[patnum4.rfind(u'//')+1:patnum4.rfind(u'&')-11]
-  ispath = os.path.exists(u'path_OCR//path_ocr')
+  patnum5 = patnum4[patnum4.rfind(u'\\')+1:patnum4.rfind(u'&')-11]
+  ispath = os.path.exists(u'path_OCR\\path_ocr')
   #print ispath
-  print "第"+str(co)+"筆 "
+  print u"第"+str(co)+u"筆 "
   
   for x in range(y):
     str1 = piece1[x]
@@ -1449,27 +1449,27 @@ def omred2(img_name,path1,co):
     if str1 == str2 :
       content = piece1[x+1]
       print content.decode('UTF-8')
-  strsp = path1+"//"+img_name
+  strsp = path1+"\\"+img_name
   im = PIL.Image.open(strsp+u'.jpg').convert('L')
   isExists = os.path.exists(strsp)
   if isExists :
     day2 = u''
     time2 = u''
     if da_v == False:
-      im.crop((205, 5, 550, 80)).save(strsp+u'//day.png')
-      day = pytesseract.image_to_string(PIL.Image.open(strsp+u'//day.png')).replace('/','').replace(" ", "").replace("O", "0")
+      im.crop((205, 5, 550, 80)).save(strsp+u'\\day.png')
+      day = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\day.png')).replace('/','').replace(" ", "").replace("O", "0")
       day=filter(str.isdigit, day)
       day2 = day[0:8]
     if day[0] == "2":
       day2 = int(day2)-19110000
     if ti_v == False:
-      im.crop((205, 115, 405, 195)).save(strsp+u'//time.png')
-      time = pytesseract.image_to_string(PIL.Image.open(strsp+u'//time.png')).replace(':','').replace(" ", "").replace("O", "0")
+      im.crop((205, 115, 405, 195)).save(strsp+u'\\time.png')
+      time = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\time.png')).replace(':','').replace(" ", "").replace("O", "0")
       time=filter(str.isdigit, time)
       time2 = time[0:4]
     if li_v == False:
-      im.crop((12, 492, 950, 1082)).save(strsp+u'//li.png')
-    f = file(strsp+'//'+img_name+'.txt', 'w+')
+      im.crop((12, 492, 950, 1082)).save(strsp+u'\\li.png')
+    f = file(strsp+'\\'+img_name+'.txt', 'w+')
     f.write(img_name+u';'+str(day2)+u';'+str(time2)+u'; '+u'; '+u';') # write text to file
     if ispath :
       f.write(content)#寫入抓到的照相地點
@@ -1483,14 +1483,14 @@ def omred2(img_name,path1,co):
     print "OK8"
 def omred3(img_name,path1,co):##20150604131720-1
   content = ""
-  patnum = path1[path1.rfind(u'//'):len(path1)] #號誌+法條
+  patnum = path1[path1.rfind(u'\\'):len(path1)] #號誌+法條
   patnum2 = path1.replace(patnum, u'') #去掉法條的路徑
-  patnum3 = patnum2[patnum2.rfind(u'//'):len(patnum2)]
+  patnum3 = patnum2[patnum2.rfind(u'\\'):len(patnum2)]
   patnum4 = patnum2.replace(patnum3, u'&')
-  patnum5 = patnum4[patnum4.rfind(u'//')+1:patnum4.rfind(u'&')-11]
-  ispath = os.path.exists(u'path_OCR//path_ocr')
+  patnum5 = patnum4[patnum4.rfind(u'\\')+1:patnum4.rfind(u'&')-11]
+  ispath = os.path.exists(u'path_OCR\\path_ocr')
   #print ispath
-  print "第"+str(co)+"筆 "
+  print u"第"+str(co)+u"筆 "
   
   for x in range(y):
     str1 = piece1[x]
@@ -1498,28 +1498,28 @@ def omred3(img_name,path1,co):##20150604131720-1
     if str1 == str2 :
       content = piece1[x+1]
       print content.decode('UTF-8')
-  strsp = path1+"//"+img_name
+  strsp = path1+"\\"+img_name
   im = PIL.Image.open(strsp+u'.jpg').convert('L')
   isExists = os.path.exists(strsp)
   if isExists :
     day2 = u''
     time2 = u''
     if da_v == False:
-      im.crop((210, 2680, 645, 2762)).save(strsp+u'//day.png')
-      day = pytesseract.image_to_string(PIL.Image.open(strsp+u'//day.png')).replace('/','').replace(" ", "").replace("O", "0")
+      im.crop((210, 2680, 645, 2762)).save(strsp+u'\\day.png')
+      day = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\day.png')).replace('/','').replace(" ", "").replace("O", "0")
       day=filter(str.isdigit, day)
       day2 = day[0:8]
       if day[0] == "2":
         day2 = int(day2)-19110000
     if ti_v == False:
-      im.crop((888, 2685, 1190, 2760)).save(strsp+u'//time.png')
-      time = pytesseract.image_to_string(PIL.Image.open(strsp+u'//time.png')).replace(':','').replace(" ", "").replace("O", "0")
+      im.crop((888, 2685, 1190, 2760)).save(strsp+u'\\time.png')
+      time = pytesseract.image_to_string(PIL.Image.open(strsp+u'\\time.png')).replace(':','').replace(" ", "").replace("O", "0")
       time=filter(str.isdigit, time)
       time2 = time[0:4]
     if li_v == False:
-      im.crop((14, 2130, 949, 2675)).save(strsp+u'//li.png')
+      im.crop((14, 2130, 949, 2675)).save(strsp+u'\\li.png')
     
-    f = file(strsp+'//'+img_name+'.txt', 'w+')
+    f = file(strsp+'\\'+img_name+'.txt', 'w+')
     f.write(img_name+u';'+str(day2)+u';'+str(time2)+u'; '+u'; '+u';') # write text to file
     if ispath :
       f.write(content)#寫入抓到的照相地點
@@ -1541,20 +1541,20 @@ def omocrwr(path1):
     while(running):
      # print "YA2"
       while(running2):
-        if  path1.rfind("//")<path1.find("(") or path1.rfind("//")<path1.find(")")  : 
+        if  path1.rfind("\\")<path1.find("(") or path1.rfind("\\")<path1.find(")")  : 
           running2 = False 
           sssss = 1
          # print "YA3"
-        if  path1.find("//")<path1.find("(") and path1.rfind("//")>path1.find("(")  or path1.find("//")<path1.find(")") and path1.rfind("//")>path1.find(")"): 
-          path1 = path1.replace("//",";",1)
+        if  path1.find("\\")<path1.find("(") and path1.rfind("\\")>path1.find("(")  or path1.find("\\")<path1.find(")") and path1.rfind("\\")>path1.find(")"): 
+          path1 = path1.replace("\\",";",1)
          # print "YA4"
-        if  path1.find("//")>path1.find("(") or path1.find("//")>path1.find(")") :   
+        if  path1.find("\\")>path1.find("(") or path1.find("\\")>path1.find(")") :   
           running2 = False 
           #print "YA5"
       running = False 
     if sssss == 0:
-      path1 = path1[0:path1.find("//")]
-      path2 = path1.replace("(", '').replace(")", '').replace(";","//")
+      path1 = path1[0:path1.find("\\")]
+      path2 = path1.replace("(", '').replace(")", '').replace(";","\\")
      # print "YA6"
       os.rename(path1,path2)
     if sssss == 1:
