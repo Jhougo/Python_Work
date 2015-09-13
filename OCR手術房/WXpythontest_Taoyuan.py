@@ -678,6 +678,12 @@ class Example(wx.Frame):
                             r2 = os.path.join(root , f).replace('.jpg','_F2.jpg')
                             os.rename(r1,r2)
                         c=c+1
+                if u'-' not in os.path.join( f) and u'_' not in os.path.join( f) : 
+                  
+                  r1 = os.path.join(root , f)
+                  r2 = os.path.join(root , f).replace('.jpg','-1.jpg')
+                  os.rename(r1,r2)
+
     for root, dirs, files in os.walk(dirpath):        
         for d in dirs:
             strf1 =  os.path.join(root,d)

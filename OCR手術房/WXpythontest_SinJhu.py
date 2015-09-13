@@ -72,7 +72,7 @@ st2 = []
 Color = ""
 
 ####存list違規路段
-ocrfilepath = os.getcwd().decode('big5')+'..\\path_OCR\\path_ocr'
+ocrfilepath = os.getcwd().decode('big5')+'\\path_OCR\\path_ocr'
 file1 = file(ocrfilepath,'r')
 content1 = file1.read()
 file1.close()

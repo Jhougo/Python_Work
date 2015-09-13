@@ -25,7 +25,7 @@
 import os
 import wx
 import wx.lib.filebrowsebutton as filebrowse
-import pytesseract
+import xlsxwriter
 import Image
 import sys
 import ImageEnhance
